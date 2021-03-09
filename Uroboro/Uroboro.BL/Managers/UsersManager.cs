@@ -5,7 +5,7 @@ namespace Uroboro.BL.Managers
 {
     public class UsersManager
     {
-        public IEnumerable<User> GetUsers()
+        public static IEnumerable<User> GetUsers()
         {
             string fakeName = "John";
             string fakeSurname = "Doe";

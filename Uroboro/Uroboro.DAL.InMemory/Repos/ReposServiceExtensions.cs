@@ -1,23 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Uroboro.Common.Models;
 using Uroboro.DAL.InMemory.Contexts;
-using Uroboro.DAL.InMemory.Repos.Todo;
+using Uroboro.DAL.Repos;
 
 namespace Uroboro.DAL.InMemory.Repos
 {
     public static class ReposServiceExtensions
     {
-        public static IServiceCollection AddTodoRepo(this IServiceCollection services)
+        public static IServiceCollection AddTodoRepo<TEntity>(this IServiceCollection services)
+            where TEntity : BaseItem
         {
             services.AddDbContext<TodoItemsContext>(
                 options => options.UseInMemoryDatabase("TodoItems"));
-            services.AddTransient<ITodoItemsRepo, TodoItemsRepo>();
-
-            //// DbContext init for SQL Server DB (sample)
-            //services.AddDbContext<SpecificContext>(options =>
-            //{
-            //    options.UseSqlServer(Configuration.GetConnectionString("DB"), providerOptions => providerOptions.EnableRetryOnFailure());
-            //});
+            services.AddTransient<IBaseRepo<TEntity>, BaseRepo<TodoItemsContext, TEntity>>();
 
             return services;
         }

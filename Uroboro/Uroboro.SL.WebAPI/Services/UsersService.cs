@@ -14,7 +14,7 @@ namespace Uroboro.SL.WebAPI.Services
         }
         public IEnumerable<User> GetUsers()
         {
-            return this._usersManager.GetUsers();
+            return UsersManager.GetUsers();
         }
     }
 }

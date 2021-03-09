@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Uroboro.BL.Managers.Todo;
+using Uroboro.BL.Managers;
 using Uroboro.Common.Models;
 
 namespace Uroboro.SL.WebAPI.Controllers
@@ -13,7 +13,7 @@ namespace Uroboro.SL.WebAPI.Controllers
     {
         // Context management moved to its own Assembly
         // private readonly TodoContext _context;
-        private readonly ITodoItemsManager _manager;
+        private readonly IBaseManager<TodoItem> _manager;
 
         // Context management moved to its own Assembly
         //public TodoItemsController(TodoContext context)
@@ -22,7 +22,7 @@ namespace Uroboro.SL.WebAPI.Controllers
         //    _manager = new TodoItemsManager();
         //}
 
-        public TodoItemsController(ITodoItemsManager manager)
+        public TodoItemsController(IBaseManager<TodoItem> manager)
         {
             _manager = manager ?? throw new ArgumentNullException(nameof(manager));
         }

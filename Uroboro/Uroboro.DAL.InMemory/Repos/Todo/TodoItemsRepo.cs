@@ -3,27 +3,25 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Uroboro.Common.Models;
 using Uroboro.DAL.InMemory.Contexts;
+using Uroboro.DAL.Repos;
 
 namespace Uroboro.DAL.InMemory.Repos.Todo
 {
-    public class TodoItemsRepo : ITodoItemsRepo
+    public class TodoItemsRepo : IBaseRepo<TodoItem>
     {
         private readonly TodoItemsContext _context;
 
-        public TodoItemsRepo(TodoItemsContext context)
-        {
-            _context = context;
-        }
+        public TodoItemsRepo(TodoItemsContext context) => _context = context;
 
         public async Task<IEnumerable<TodoItem>> Read()
         {
-            var todoItems = await _context.TodoItems.ToListAsync();
+            var todoItems = await _context.TodoItems.AsNoTracking().ToListAsync();
             return todoItems;
         }
 
         public async Task<TodoItem> Details(long? id)
         {
-            var todoItem = await _context.TodoItems.FirstOrDefaultAsync(m => m.Id == id);
+            var todoItem = await _context.TodoItems.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
             return todoItem;
         }
 

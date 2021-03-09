@@ -60,7 +60,7 @@
                             <td><input class="form-control form-control-sm" type="text" @bind="item.Name" /></td>
                             <td>
                                 <div class="form-check">
-                                    <input class="form-check-input position-static" type="checkbox" @bind="item.IsComplete" />
+                                    <input class="form-check-input position-static" type="checkbox" @bind="item.IsCompleted" />
                                 </div>
                             </td>
                             <td><button class="btn btn-sm btn-primary" @onclick="(e => UpdateTodoWrapper(item))">Update</button></td>
@@ -121,7 +121,7 @@
                 <ul>
                     @foreach (var item in localBlazorServiceItems)
                     {
-                        <li>@item.Name (@item.IsComplete)</li>
+                        <li>@item.Name (@item.IsCompleted)</li>
                     }
                 </ul>
             }
@@ -192,7 +192,7 @@
 
     private async Task AddTodoFromWebApi()
     {
-        var addItem = new TodoItem { Name = webApiNewItemName, IsComplete = false };
+        var addItem = new TodoItem { Name = webApiNewItemName, IsCompleted = false };
         await Http.PostAsJsonAsync($"{Configuration["WebApiUri"]}TodoItems/Create", addItem);
     }
 

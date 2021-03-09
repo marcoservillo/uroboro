@@ -57,7 +57,7 @@ namespace Uroboro.SL.WebAPI
             });
 
             // Add controller dependencies
-            services.AddTodoManager();
+            services.AddManagers(Configuration);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

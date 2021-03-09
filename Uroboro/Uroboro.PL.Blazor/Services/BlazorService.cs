@@ -7,7 +7,7 @@ namespace Uroboro.PL.Blazor.Services
 {
     public class BlazorService : IBlazorService
     {
-        public static Dictionary<string, string> InMemoryDictionarySettings = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> InMemoryDictionarySettings = new()
         {
             { "InMemoryKey", "Custom value from in-memory Dictionary" },
             { "InMemorySection:SubKey", "Custom sub-value from in-memory Dictionary" }
@@ -28,8 +28,8 @@ namespace Uroboro.PL.Blazor.Services
 
         public Task<IReadOnlyList<TodoItem>> GetAsync()
         {
-            TodoItem item = new TodoItem() { IsComplete = true, Name = "Fake Item" };
-            List<TodoItem> list = new List<TodoItem>() { item };
+            TodoItem item = new() { IsCompleted = true, Name = "Fake Item" };
+            List<TodoItem> list = new() { item };
             IReadOnlyList<TodoItem> result = list.AsReadOnly();
             Console.WriteLine("GetAsync called");
             return Task.FromResult<IReadOnlyList<TodoItem>>(result);

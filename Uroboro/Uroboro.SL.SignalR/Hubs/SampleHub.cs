@@ -32,7 +32,7 @@ namespace Uroboro.SL.SignalR.Hubs
         public async Task SendParamsToClient(string name)
         {
             var p1 = true;
-            TodoItem item = new TodoItem() { Id = 1, Name = name, IsComplete = true };
+            TodoItem item = new() { Id = 1, Name = name, IsCompleted = true };
             await Clients.Caller.SendAsync("GetServerMessageWithParams", p1, item);
         }
     }
