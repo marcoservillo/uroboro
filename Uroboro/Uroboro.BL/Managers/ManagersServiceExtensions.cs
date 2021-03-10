@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Uroboro.Common.Models;
+using Uroboro.DAL.InMemory.Contexts;
 using Uroboro.DAL.InMemory.Repos;
+using Uroboro.DAL.SQLServer.Contexts;
 using Uroboro.DAL.SQLServer.Repos;
 
 namespace Uroboro.BL.Managers
@@ -12,7 +14,9 @@ namespace Uroboro.BL.Managers
         {
             services
                 .AddTodoRepo<TodoItem>()
-                .AddUroboroRepo<UroboroItem>(configuration);
+                .AddUroboroRepo<TodoItem>(configuration)
+                .AddTransient<IBaseManager<TodoItemsContext, TodoItem>, BaseManager<TodoItemsContext, TodoItem>>()
+                .AddTransient<IBaseManager<UroboroContext, TodoItem>, BaseManager<UroboroContext, TodoItem>>();
 
             return services;
         }

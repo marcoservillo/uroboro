@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Uroboro.Common.Models;
@@ -6,12 +7,13 @@ using Uroboro.DAL.Repos;
 
 namespace Uroboro.BL.Managers
 {
-    public class BaseManager<TEntity> : IBaseManager<TEntity>
+    public class BaseManager<TContext, TEntity> : IBaseManager<TContext, TEntity>
+        where TContext : DbContext
         where TEntity : BaseItem
     {
-        protected readonly IBaseRepo<TEntity> _repo;
+        protected readonly IBaseRepo<TContext, TEntity> _repo;
 
-        public BaseManager(IBaseRepo<TEntity> repo)
+        public BaseManager(IBaseRepo<TContext, TEntity> repo)
         {
             _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using Uroboro.Common.Models;
+using Uroboro.DAL.Extensions;
 
 namespace Uroboro.DAL.InMemory.Contexts
 {
@@ -22,6 +24,26 @@ namespace Uroboro.DAL.InMemory.Contexts
         //        optionsBuilder.UseSqlServer(connectionString);
         //    }
         //}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.AddQueryFilterToAllEntitiesAssignableFrom<IBaseItem>(qf => !qf.IsDeleted);
+
+            TodoItem todoItem = new()
+            {
+                Id = 1,
+                Name = "UroboroItem",
+                IsDeleted = false,
+                IsCompleted = true,
+                CreatedBy = "system",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            modelBuilder.Entity<TodoItem>().HasData(todoItem);
+            modelBuilder.Ignore<BaseItem>();
+
+            base.OnModelCreating(modelBuilder);
+        }
 
         public DbSet<TodoItem> TodoItems { get; set; }
     }

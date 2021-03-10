@@ -13,7 +13,7 @@ namespace Uroboro.DAL.InMemory.Repos
         {
             services.AddDbContext<TodoItemsContext>(
                 options => options.UseInMemoryDatabase("TodoItems"));
-            services.AddTransient<IBaseRepo<TEntity>, BaseRepo<TodoItemsContext, TEntity>>();
+            services.AddTransient<IBaseRepo<TodoItemsContext, TEntity>, BaseRepo<TodoItemsContext, TEntity>>();
 
             return services;
         }

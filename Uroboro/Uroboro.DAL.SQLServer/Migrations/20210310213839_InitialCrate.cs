@@ -8,16 +8,16 @@ namespace Uroboro.DAL.SQLServer.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UroboroItems",
+                name: "TodoItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsCompleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CompletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -27,19 +27,19 @@ namespace Uroboro.DAL.SQLServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UroboroItems", x => x.Id);
+                    table.PrimaryKey("PK_TodoItems", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
-                table: "UroboroItems",
-                columns: new[] { "Id", "CompletedAt", "CompletedBy", "CreateAt", "CreateBy", "DeletedAt", "DeletedBy", "IsCompleted", "IsDeleted", "ModifiedAt", "ModifiedBy", "Name" },
-                values: new object[] { 1, null, null, new DateTime(2021, 3, 9, 14, 57, 13, 681, DateTimeKind.Utc).AddTicks(7438), "system", null, null, true, false, null, null, "UroboroItem" });
+                table: "TodoItems",
+                columns: new[] { "Id", "CompletedAt", "CompletedBy", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "IsCompleted", "IsDeleted", "ModifiedAt", "ModifiedBy", "Name" },
+                values: new object[] { 1L, null, null, new DateTime(2021, 3, 10, 21, 38, 38, 536, DateTimeKind.Utc).AddTicks(6268), "system", null, null, true, false, null, null, "UroboroItem" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UroboroItems");
+                name: "TodoItems");
         }
     }
 }

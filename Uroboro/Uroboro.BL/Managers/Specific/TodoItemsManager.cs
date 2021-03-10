@@ -1,11 +1,13 @@
-﻿using Uroboro.Common.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Uroboro.Common.Models;
 using Uroboro.DAL.Repos;
 
 namespace Uroboro.BL.Managers.Specific
 {
-    public class TodoItemsManager : BaseManager<TodoItem>
+    public class TodoItemsManager<TContext> : BaseManager<TContext, TodoItem>
+        where TContext : DbContext
     {
-        public TodoItemsManager(IBaseRepo<TodoItem> repo) : base(repo)
+        public TodoItemsManager(IBaseRepo<TContext, TodoItem> repo) : base(repo)
         {
         }
     }

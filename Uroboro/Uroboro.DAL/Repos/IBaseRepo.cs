@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Uroboro.Common.Models;
 
 namespace Uroboro.DAL.Repos
 {
-    public interface IBaseRepo<T>
-        where T : BaseItem
+    public interface IBaseRepo<TContext, TEntity>
+        where TContext : DbContext
+        where TEntity : BaseItem
     {
-        Task<IEnumerable<T>> Read();
+        Task<IEnumerable<TEntity>> Read();
 
-        Task<T> Details(long? id);
+        Task<TEntity> Details(long? id);
 
-        Task<T> Create(T baseItem);
+        Task<TEntity> Create(TEntity baseItem);
 
-        Task<T> Update(T baseItem);
+        Task<TEntity> Update(TEntity baseItem);
 
         Task<long> Delete(long id);
     }

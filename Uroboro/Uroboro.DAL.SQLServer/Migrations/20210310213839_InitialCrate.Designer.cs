@@ -10,7 +10,7 @@ using Uroboro.DAL.SQLServer.Contexts;
 namespace Uroboro.DAL.SQLServer.Migrations
 {
     [DbContext(typeof(UroboroContext))]
-    [Migration("20210309145714_InitialCrate")]
+    [Migration("20210310213839_InitialCrate")]
     partial class InitialCrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,11 +21,11 @@ namespace Uroboro.DAL.SQLServer.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Uroboro.Common.Models.UroboroItem", b =>
+            modelBuilder.Entity("Uroboro.Common.Models.TodoItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("CompletedAt")
@@ -34,10 +34,10 @@ namespace Uroboro.DAL.SQLServer.Migrations
                     b.Property<string>("CompletedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreateBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DeletedAt")
@@ -63,14 +63,14 @@ namespace Uroboro.DAL.SQLServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UroboroItems");
+                    b.ToTable("TodoItems");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CreateAt = new DateTime(2021, 3, 9, 14, 57, 13, 681, DateTimeKind.Utc).AddTicks(7438),
-                            CreateBy = "system",
+                            Id = 1L,
+                            CreatedAt = new DateTime(2021, 3, 10, 21, 38, 38, 536, DateTimeKind.Utc).AddTicks(6268),
+                            CreatedBy = "system",
                             IsCompleted = true,
                             IsDeleted = false,
                             Name = "UroboroItem"

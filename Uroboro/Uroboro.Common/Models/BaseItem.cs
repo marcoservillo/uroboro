@@ -4,11 +4,11 @@ namespace Uroboro.Common.Models
 {
     public abstract class BaseItem : IBaseItem
     {
-        public int Id { get; set; }
-        public bool IsDeleted { get; set; }
-        public bool IsCompleted { get; set; }
-        public string CreateBy { get; set; }
-        public DateTime CreateAt { get; set; }
+        public long Id { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public bool IsCompleted { get; set; } = true;
+        public string CreatedBy { get; set; }
+        public DateTime CreatedAt { get; set; }
         public string CompletedBy { get; set; }
         public DateTime? CompletedAt { get; set; }
         public string ModifiedBy { get; set; }

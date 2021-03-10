@@ -5,7 +5,6 @@ using System.Reflection;
 using Uroboro.Common.Models;
 using Uroboro.DAL.Repos;
 using Uroboro.DAL.SQLServer.Contexts;
-using Uroboro.DAL.SQLServer.Repos.Uroboro;
 
 namespace Uroboro.DAL.SQLServer.Repos
 {
@@ -22,7 +21,7 @@ namespace Uroboro.DAL.SQLServer.Repos
                     providerOptions.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
                 });
             });
-            services.AddTransient<IBaseRepo<TEntity>, BaseRepo<UroboroContext, TEntity>>();
+            services.AddTransient<IBaseRepo<UroboroContext, TEntity>, BaseRepo<UroboroContext, TEntity>>();
 
             return services;
         }

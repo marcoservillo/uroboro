@@ -1,17 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Uroboro.Common.Models;
 
 namespace Uroboro.BL.Managers
 {
-    public interface IBaseManager<T>
+    public interface IBaseManager<TContext, TEntity>
+        where TContext : DbContext
+        where TEntity : BaseItem
     {
-        Task<IEnumerable<T>> Read();
+        Task<IEnumerable<TEntity>> Read();
 
-        Task<T> Details(long? id);
+        Task<TEntity> Details(long? id);
 
-        Task<T> Create(T todoItem);
+        Task<TEntity> Create(TEntity todoItem);
 
-        Task<T> Update(T todoItem);
+        Task<TEntity> Update(TEntity todoItem);
 
         Task<long?> Delete(long id);
     }
