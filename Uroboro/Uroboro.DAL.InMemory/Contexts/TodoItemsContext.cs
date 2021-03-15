@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using Uroboro.Common.Models;
-using Uroboro.DAL.Extensions;
+using Uroboro.DAL.Contexts;
 
 namespace Uroboro.DAL.InMemory.Contexts
 {
-    public class TodoItemsContext : DbContext
+    public class TodoItemsContext : BaseContext
     {
         public TodoItemsContext(DbContextOptions<TodoItemsContext> options) : base(options)
         {
@@ -27,20 +27,24 @@ namespace Uroboro.DAL.InMemory.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.AddQueryFilterToAllEntitiesAssignableFrom<IBaseItem>(qf => !qf.IsDeleted);
-
             TodoItem todoItem = new()
             {
-                Id = 1,
-                Name = "UroboroItem",
-                IsDeleted = false,
-                IsCompleted = true,
-                CreatedBy = "system",
-                CreatedAt = DateTime.UtcNow
+                Name = "UroboroItem"
             };
 
-            modelBuilder.Entity<TodoItem>().HasData(todoItem);
-            modelBuilder.Ignore<BaseItem>();
+            modelBuilder
+                .Entity<TodoItem>()
+                .HasData(new
+                {
+                    todoItem.Id,
+                    todoItem.Name,
+                    IsDeleted = false,
+                    IsCompleted = true,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "system",
+                    ModifiedAt = DateTime.UtcNow,
+                    ModifiedBy = "system"
+                });
 
             base.OnModelCreating(modelBuilder);
         }

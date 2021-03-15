@@ -8,8 +8,8 @@ using Uroboro.DAL.SQLServer.Contexts;
 
 namespace Uroboro.DAL.SQLServer.Migrations
 {
-    [DbContext(typeof(UroboroContext))]
-    partial class UroboroContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(UroboroMigrationContext))]
+    partial class UroboroMigrationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,7 @@ namespace Uroboro.DAL.SQLServer.Migrations
                     b.Property<string>("CompletedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -67,10 +67,12 @@ namespace Uroboro.DAL.SQLServer.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2021, 3, 10, 21, 38, 38, 536, DateTimeKind.Utc).AddTicks(6268),
+                            CreatedAt = new DateTime(2021, 3, 11, 12, 1, 43, 243, DateTimeKind.Utc).AddTicks(5171),
                             CreatedBy = "system",
                             IsCompleted = true,
                             IsDeleted = false,
+                            ModifiedAt = new DateTime(2021, 3, 11, 12, 1, 43, 243, DateTimeKind.Utc).AddTicks(5185),
+                            ModifiedBy = "system",
                             Name = "UroboroItem"
                         });
                 });

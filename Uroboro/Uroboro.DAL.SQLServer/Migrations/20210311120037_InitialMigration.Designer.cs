@@ -9,9 +9,9 @@ using Uroboro.DAL.SQLServer.Contexts;
 
 namespace Uroboro.DAL.SQLServer.Migrations
 {
-    [DbContext(typeof(UroboroContext))]
-    [Migration("20210310213839_InitialCrate")]
-    partial class InitialCrate
+    [DbContext(typeof(UroboroMigrationContext))]
+    [Migration("20210311120037_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,7 +34,7 @@ namespace Uroboro.DAL.SQLServer.Migrations
                     b.Property<string>("CompletedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -69,10 +69,11 @@ namespace Uroboro.DAL.SQLServer.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2021, 3, 10, 21, 38, 38, 536, DateTimeKind.Utc).AddTicks(6268),
+                            CreatedAt = new DateTime(2021, 3, 11, 12, 0, 36, 557, DateTimeKind.Utc).AddTicks(7422),
                             CreatedBy = "system",
                             IsCompleted = true,
                             IsDeleted = false,
+                            ModifiedBy = "system",
                             Name = "UroboroItem"
                         });
                 });

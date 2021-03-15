@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Security.Claims;
+using System.Reflection;
 using System.Threading.Tasks;
 using Uroboro.Common.Models;
+using Uroboro.DAL.Contexts;
 
 namespace Uroboro.DAL.Repos
 {
     public class BaseRepo<TContext, TEntity> : IBaseRepo<TContext, TEntity>
-        where TContext : DbContext
+        where TContext : BaseContext
         where TEntity : BaseItem
     {
         protected readonly TContext _context;
@@ -32,10 +32,6 @@ namespace Uroboro.DAL.Repos
 
         public async Task<TEntity> Create(TEntity baseItem)
         {
-            baseItem.CreatedAt = DateTime.UtcNow;
-            // When there will be a claim I take User Name
-            //baseItem.CreatedBy = ClaimsPrincipal.Current.Identity.Name;
-            baseItem.CreatedBy = "system";
             _context.Set<TEntity>().Add(baseItem);
             await _context.SaveChangesAsync();
             return baseItem;
@@ -43,29 +39,29 @@ namespace Uroboro.DAL.Repos
 
         public async Task<TEntity> Update(TEntity baseItem)
         {
-            // To Avoid tracking error
-            baseItem.ModifiedAt = DateTime.UtcNow;
-            // When there will be a claim I take User Name
-            //baseItem.ModifiedBy = ClaimsPrincipal.Current.Identity.Name;
-            baseItem.ModifiedBy = "system";
-            var entityToDetach = await _context.Set<TEntity>().FirstOrDefaultAsync(m => m.Id == baseItem.Id);
-            _context.Entry(entityToDetach).State = EntityState.Detached;
-            _context.Update(baseItem);
-            await _context.SaveChangesAsync();
-            return baseItem;
+            var itemToUpdate = await _context.Set<TEntity>().FindAsync(baseItem.Id);
+            if(itemToUpdate != null)
+            { 
+                foreach (var prop in itemToUpdate.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                {
+                    prop.SetValue(itemToUpdate, baseItem.GetType().GetProperty(prop.Name).GetValue(baseItem));
+                }
+                _context.Update(itemToUpdate);
+                await _context.SaveChangesAsync();
+            }
+            return itemToUpdate;
         }
 
-        public async Task<long> Delete(long id)
+        public async Task<long?> Delete(long id)
         {
             var baseItem = await _context.Set<TEntity>().FindAsync(id);
-            baseItem.IsDeleted = true;
-            baseItem.DeletedAt = DateTime.UtcNow;
-            // When there will be a claim I take User Name
-            //baseItem.DeletedBy = ClaimsPrincipal.Current.Identity.Name;
-            baseItem.DeletedBy = "system";
-            _context.Update(baseItem);
-            await _context.SaveChangesAsync();
-            return id;
+            if(baseItem != null)
+            {
+                baseItem.IsDeleted = true;
+                _context.Update(baseItem);
+                await _context.SaveChangesAsync();
+            }
+            return baseItem?.Id;
         }
     }
 }

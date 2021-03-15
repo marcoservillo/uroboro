@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Uroboro.Common.Models;
+using Uroboro.DAL.Contexts;
 
 namespace Uroboro.BL.Managers
 {
     public interface IBaseManager<TContext, TEntity>
-        where TContext : DbContext
+        where TContext : BaseContext
         where TEntity : BaseItem
     {
         Task<IEnumerable<TEntity>> Read();
